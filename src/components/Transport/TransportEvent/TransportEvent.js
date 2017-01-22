@@ -28,4 +28,3 @@ export default class TransportEvent extends Component {
     );
   }
 }
-export const apiKey = 'F3jX9shwc88K6bWh';
