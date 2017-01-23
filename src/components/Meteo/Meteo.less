@@ -3,16 +3,21 @@
 }
 :local(.title) {
     font-family: Roboto;
-    color: #fff;
+    color: #343434;
     text-align: center;
     width: 100%;
     margin-bottom: 10px;
+    padding-bottom: 3px;
+    border-bottom: 1px solid rgb(0, 188, 212);
 }
 :local(.info_container) {
     width: calc(~"50% - 20px");
     float: left;
+    height: 220px;
     margin-top: 60px;
-    margin-right: 10px;
+    padding-right: 10px;
+    border-right: 1px solid;
+    border-right-color: rgb(0, 188, 212);
 }
 :local(.table) {
     background-color: transparent !important;
@@ -24,7 +29,8 @@
         font-size: 15px !important;
     }
     * {
-        color: #fff !important;
+        color: #343434 !important;
+        border-color: rgb(0, 188, 212) !important;
     }
 }
 :local(.icon_container) {

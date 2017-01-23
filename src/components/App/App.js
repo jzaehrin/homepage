@@ -67,7 +67,8 @@ export default class App extends Component {
           <AppBar
             title="Home Page"
             iconElementLeft={<p />}
-            style={{ marginBottom: '5px' }}
+            style={{ marginBottom: '5px', backgroundColor: '#ecf0f1' }}
+            titleStyle={{ color: '3434344' }}
           />
           <div className={`${style.col} ${style.background}`}>
             {meteo}

@@ -69,10 +69,6 @@ export default class TransportForm extends Component {
   }
 
   render() {
-    /* const css = {
-      width: '100% !important',
-    }; */
-
     return (
       <div className={style.container}>
         <h2 className={style.title}>Search Travel</h2>
@@ -118,6 +114,7 @@ export default class TransportForm extends Component {
           <RaisedButton
             type="submit"
             label="Find"
+            primary
             fullWidth
           />
         </form>
