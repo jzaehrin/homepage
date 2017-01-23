@@ -67,8 +67,9 @@ export default class App extends Component {
           <AppBar
             title="Home Page"
             iconElementLeft={<p />}
+            style={{ marginBottom: '5px' }}
           />
-          <div className={style.col}>
+          <div className={`${style.col} ${style.background}`}>
             {meteo}
           </div>
           <Transport />

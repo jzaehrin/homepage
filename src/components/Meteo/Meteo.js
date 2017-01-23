@@ -108,10 +108,10 @@ export default class Meteo extends Component {
 
     // const result = this.props.data;
     return (
-      <div>
+      <div className={style.container}>
         <h2 className={style.title}>Information Meteo pour {this.props.data.city_info.name} à {this.props.hour.split('H')[0]}H</h2>
         <div className={style.info_container}>
-          <Table>
+          <Table className={style.table}>
             <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
               <TableRow>
                 <TableHeaderColumn>Condition</TableHeaderColumn>
@@ -132,7 +132,9 @@ export default class Meteo extends Component {
             </TableBody>
           </Table>
         </div>
-        <MeteoIcon className={style.icon_container} svgConfig={this.svgConfig} />
+        <div className={style.icon_container}>
+          <MeteoIcon svgConfig={this.svgConfig} />
+        </div>
       </div>
     );
   }

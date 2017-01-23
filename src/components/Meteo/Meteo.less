@@ -1,12 +1,36 @@
+:local(.container) {
+    padding: 10px;
+}
 :local(.title) {
-
+    font-family: Roboto;
+    color: #fff;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 10px;
 }
 :local(.info_container) {
-    width: 50%;
+    width: calc(~"50% - 20px");
     float: left;
+    margin-top: 60px;
+    margin-right: 10px;
+}
+:local(.table) {
+    background-color: transparent !important;
+    th {
+        font-size: 22px !important;
+        font-style: bold;
+    }
+    td {
+        font-size: 15px !important;
+    }
+    * {
+        color: #fff !important;
+    }
 }
 :local(.icon_container) {
-    width: 40%;
+    width: calc(~"50% - 20px");
+    height: 80%;
     margin: 10px;
     float: left;
+    margin-left: 10px;
 }

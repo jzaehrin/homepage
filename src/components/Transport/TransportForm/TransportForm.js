@@ -1,14 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import $ from 'jquery';
+import _ from 'lodash';
 import AutoComplete from 'material-ui/AutoComplete';
+import RaisedButton from 'material-ui/RaisedButton';
 import 'jquery-ui/themes/base/core.css';
 import 'jquery-ui/themes/base/menu.css';
 import 'jquery-ui/themes/base/theme.css';
 import 'jquery-ui/themes/base/autocomplete.css';
 import 'jquery-ui/ui/widgets/autocomplete';
 
-
-// import style from './app.css';
+import style from './TransportForm.less';
 
 export default class TransportForm extends Component {
 
@@ -68,39 +69,57 @@ export default class TransportForm extends Component {
   }
 
   render() {
+    /* const css = {
+      width: '100% !important',
+    }; */
+
     return (
-      <div className="transport-form">
-        <h2>Search Travel</h2>
-        <form onSubmit={this.onSubmit}>
+      <div className={style.container}>
+        <h2 className={style.title}>Search Travel</h2>
+        <form onSubmit={this.onSubmit} className={style.form}>
           <div>
             <AutoComplete
-              hintText="From"
+              floatingLabelText="From"
               dataSource={this.state.dataSource}
-              onUpdateInput={this.handleUpdateInput}
+              onUpdateInput={
+                _.debounce((value) => { this.handleUpdateInput(value); }, 100)
+              }
               ref={(from) => { this.from = from; }}
+              fullWidth
             />
           </div>
           <div>
             <AutoComplete
-              hintText="To"
+              floatingLabelText="To"
               dataSource={this.state.dataSource}
-              onUpdateInput={this.handleUpdateInput}
+              onUpdateInput={
+                _.debounce((value) => { this.handleUpdateInput(value); }, 100)
+              }
               ref={(to) => { this.to = to; }}
+              fullWidth
             />
           </div>
           <div>
             <AutoComplete
-              hintText="Via"
+              floatingLabelText="Via"
               dataSource={this.state.dataSource}
-              onUpdateInput={this.handleUpdateInput}
+              onUpdateInput={
+                _.debounce((value) => { this.handleUpdateInput(value); }, 100)
+              }
               ref={(via) => { this.via = via; }}
+              fullWidth
             />
           </div>
 
-          <label htmlFor="datetime">Time:</label>
-          <input type="datetime-local" ref={(datetime) => { this.datetime = datetime; }} defaultValue={this.state.datetime} />
-
-          <button type="submit" id="getTravel">Travel</button>
+          <div className={style.datatimePicker}>
+            <label htmlFor="datetime">Time:</label>
+            <input type="datetime-local" ref={(datetime) => { this.datetime = datetime; }} defaultValue={this.state.datetime} />
+          </div>
+          <RaisedButton
+            type="submit"
+            label="Find"
+            fullWidth
+          />
         </form>
       </div>
     );

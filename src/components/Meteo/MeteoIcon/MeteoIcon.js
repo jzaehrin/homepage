@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 
 import animateSun, { animateMoon, animateCloud, animateLittleCloud } from './SVGAnimate/SVGAnimate';
 
-import style from './MeteoIcon.css';
+import style from './MeteoIcon.less';
 
 export default class MeteoIcon extends Component {
 
@@ -28,8 +28,6 @@ export default class MeteoIcon extends Component {
   }
 
   configSVG() {
-    this.props.svgConfig.sunnyEnable = false;
-
     this.snowing.style.opacity = 0;
     if (this.props.svgConfig.snowEnable) {
       this.snowing.style.opacity = 1;
@@ -88,7 +86,7 @@ export default class MeteoIcon extends Component {
 
   render() {
     return (
-      <svg version="1.1" viewBox="0 187 612 674" width="40%" x="200px" y="200px" xmlSpace="preserve">
+      <svg className={style.svg} version="1.1" viewBox="-30 130 700 730" height="100%" width="100%" x="200px" y="200px" xmlSpace="preserve">
         <g ref={(raining) => { this.raining = raining; }}>
           <g>
             <path d="M153.6,743.6c-5.7-3.2-9.1,6.9-11.1,10.4c-1.9,3.5-8.2,11.2-3.4,14.6c5.8,4.1,9.6-6.6,11.5-10.1&#xA;&#x9;&#x9;&#x9;C152.5,754.9,159.2,746.7,153.6,743.6C151.3,742.3,155.8,744.8,153.6,743.6z" fill="#D0E8F9" />

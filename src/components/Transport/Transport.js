@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import moment from 'moment';
+import Popover, { PopoverAnimationVertical } from 'material-ui/Popover';
 
 import TransportForm from './TransportForm';
 import TransportConnection from './TransportConnection';
 import TransportEvent from './TransportEvent';
 import Meteo from '../Meteo';
 import listCities from './list-cities.json';
-
 import style from './Transport.less';
 
 export default class Transport extends Component {
@@ -15,6 +15,7 @@ export default class Transport extends Component {
     super();
 
     this.handlerUpdate = this.handlerUpdate.bind(this);
+    this.handleRequestClosing = this.handleRequestClosing.bind(this);
   }
   state = {
     from: '',
@@ -24,6 +25,7 @@ export default class Transport extends Component {
     transport_api: null,
     meteo_api: null,
     event_api: null,
+    pop: true,
   };
 
   getTransportConnection(data) {
@@ -93,8 +95,10 @@ export default class Transport extends Component {
                         meteo_api: r,
                         meteo_api_selectedDay: selectedDay.toString(),
                         meteo_api_error: false,
+                        pop: true,
                         meteo_api_precision: `The precision is possibily change because informations are locate with lat & lng. Or the city is wrong,
-                                              follow the link for verifiy. Alternative for meteo API : ${alternative.join(', ')}`,
+                          follow the link for verifiy.`,
+                        meteo_api_precision_alternative: `Alternative for meteo API : ${alternative.join(', ')}`,
                         // meteo_api_precision_link: `https://www.google.com/maps/preview/@${city.lat},${city.lng},8z`,
                         meteo_api_precision_link: `https://maps.google.com/?q=${city.lat},${city.lng}&ll=${city.lat},${city.lng}&z=6`,
                       });
@@ -117,6 +121,12 @@ export default class Transport extends Component {
     } else {
       this.setState({ meteo_api_message: 'The days selected was too in the futurs or in the past', meteo_api_error: true });
     }
+  }
+
+  handleRequestClosing() {
+    this.setState({
+      pop: false,
+    });
   }
 
   handlerUpdate(data) {
@@ -147,6 +157,14 @@ export default class Transport extends Component {
     let connection = '';
     let meteo = '';
     let meteoPrecision = '';
+    const css = {
+      width: 'calc(100% - 40px',
+      marginRight: '20px',
+      marginLeft: '20px',
+      backgroundColor: '#f39c12',
+      padding: '10px',
+
+    };
 
     if (this.state.type && this.state.message) {
       const classString = `alert alert- ${this.state.type}`;
@@ -155,15 +173,15 @@ export default class Transport extends Component {
 
     if (!this.state.transport_api_error && this.state.transport_api) {
       connection = (
-        <div className={style.result}>
+        <div className={style.colRight}>
           <TransportConnection
             data={this.state.transport_api}
           />
         </div>
       );
-    } else {
+    } else if (this.state.transport_api_error) {
       connection = (
-        <div className={style.result}>
+        <div className={style.colRight}>
           <p className="error" id="transportConnectrion">
             {this.state.transport_api_message}
           </p>
@@ -173,9 +191,27 @@ export default class Transport extends Component {
 
     if (!this.state.meteo_api_error && this.state.meteo_api) {
       if (this.state.meteo_api_hour) {
+        if (this.state.meteo_api_precision) {
+          meteoPrecision = (
+            <Popover
+              open={this.state.pop}
+              anchorEl={document.getElementsByName('body')[0]}
+              onRequestClose={this.handleRequestClosing}
+              useLayerForClickAway
+              animation={PopoverAnimationVertical}
+              style={css}
+            >
+              <p>{this.state.meteo_api_precision}</p>
+              <p>{this.state.meteo_api_precision_alternative}</p>
+              <a target="_blank" rel="noopener noreferrer" href={this.state.meteo_api_precision_link}>Google Map</a>
+            </Popover>
+          );
+        }
         meteo = (
-          <div className={style.result}>
+          <div className={style.col} >
+            {meteoPrecision}
             <Meteo
+              ref={(m) => { this.meteo = m; }}
               data={this.state.meteo_api}
               hour={this.state.meteo_api_hour}
               selectedDay={this.state.meteo_api_selectedDay}
@@ -183,21 +219,12 @@ export default class Transport extends Component {
           </div>
         );
       }
-    } else {
+    } else if (this.state.meteo_api_error) {
       meteo = (
-        <div className={style.result}>
+        <div className={style.col}>
           <p className="error" id="transportMeteo">
             {this.state.meteo_api_message}
           </p>
-        </div>
-      );
-    }
-
-    if (this.state.meteo_api_precision) {
-      meteoPrecision = (
-        <div className="Info">
-          <p>{this.state.meteo_api_precision}</p>
-          <a target="_blank" rel="noopener noreferrer" href={this.state.meteo_api_precision_link}>Google Map</a>
         </div>
       );
     }
@@ -213,13 +240,8 @@ export default class Transport extends Component {
           <TransportForm onSubmit={this.handlerUpdate} />
           {status}
         </div>
-        <div className={style.col}>
-          {connection}
-        </div>
-        <div className={style.col}>
-          {meteoPrecision}
-          {meteo}
-        </div>
+        {connection}
+        {meteo}
       </div>
     );
   }

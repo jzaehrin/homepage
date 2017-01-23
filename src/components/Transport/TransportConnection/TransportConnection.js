@@ -34,18 +34,18 @@ export default class TransportConnection extends Component {
     ));
     return (
       <div className={style.container}>
-        <h2>Travel Connection</h2>
-        <Table>
+        <h2 className={style.title}>Travel Connection</h2>
+        <Table className={style.table}>
           <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
             <TableRow>
               <TableHeaderColumn tooltip="Departure Hour">Departure</TableHeaderColumn>
               <TableHeaderColumn tooltip="Lane of the departure">Lane</TableHeaderColumn>
               <TableHeaderColumn tooltip="Duration of the travel">Duration</TableHeaderColumn>
               <TableHeaderColumn tooltip="Nomber of changes during the travel">Nbr changes</TableHeaderColumn>
-              <TableHeaderColumn tooltip="All Type of train">Type of train</TableHeaderColumn>
+              <TableHeaderColumn tooltip="All Type of train">Tains</TableHeaderColumn>
             </TableRow>
           </TableHeader>
-          <TableBody displayRowCheckbox={false} >
+          <TableBody stripedRows displayRowCheckbox={false} >
             {connectionsArray}
           </TableBody>
         </Table>
