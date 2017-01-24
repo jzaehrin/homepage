@@ -39,15 +39,15 @@ export default class Meteo extends Component {
     const hourlyResult = day.hourly_data[this.props.hour];
     console.debug('hourlyResult', hourlyResult);
 
-    const temperatureText = `Température de ${hourlyResult.TMP2m}C°`;
+    const temperatureText = `Temperature of ${hourlyResult.TMP2m}C°`;
 
     let precipitation = '';
     let snowEnable = false;
     let rainEnable = false;
     if (hourlyResult.APCPsfc > 0) {
-      let type = 'pluie';
+      let type = 'rain';
       if (hourlyResult.ISSNOW) {
-        type = 'neige';
+        type = 'snow';
         snowEnable = true;
       } else {
         rainEnable = true;
@@ -56,7 +56,7 @@ export default class Meteo extends Component {
       precipitation = (
         <TableRow>
           <TableRowColumn>
-            Précipitation {hourlyResult.APCPsfc} mm/H de {type}
+            Precipitation : {hourlyResult.APCPsfc} mm/H of {type}
           </TableRowColumn>
         </TableRow>
       );
@@ -71,18 +71,18 @@ export default class Meteo extends Component {
     }
 
     let stormEnable = false;
-    if (/orage/.test(hourlyResult.CONDITION)) {
+    if (/orage/.test(hourlyResult.CONDITION_KEY)) {
       stormEnable = true;
     }
 
     let sunnyEnable = false;
-    if (/Eclaircie|Stratus|/.test(hourlyResult.CONDITION)) {
+    if (/eclaircie|stratus/.test(hourlyResult.CONDITION_KEY)) {
       sunnyEnable = true;
     }
 
     let sunEnable = false;
     let cloudEnable = false;
-    if (rainEnable || stormEnable || snowEnable || /nuageux|Couvert/.test(hourlyResult.CONDITION) || sunnyEnable) {
+    if (rainEnable || stormEnable || snowEnable || /nuageux|couvert/.test(hourlyResult.CONDITION_KEY) || sunnyEnable) {
       cloudEnable = true;
     } else {
       sunEnable = true;
@@ -109,7 +109,7 @@ export default class Meteo extends Component {
     // const result = this.props.data;
     return (
       <div className={style.container}>
-        <h2 className={style.title}>Information Meteo pour {this.props.data.city_info.name} à {this.props.hour.split('H')[0]}H</h2>
+        <h2 className={style.title}>Weather information for {this.props.data.city_info.name} at {this.props.hour.split('H')[0]}H</h2>
         <div className={style.info_container}>
           <Table className={style.table}>
             <TableHeader adjustForCheckbox={false} displaySelectAll={false}>

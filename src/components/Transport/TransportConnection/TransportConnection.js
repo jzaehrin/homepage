@@ -23,6 +23,7 @@ export default class TransportConnection extends Component {
 
   render() {
     const result = this.props.data.connections;
+    result.lenght = 4;
     const connectionsArray = result.map(c => (
       <TableRow>
         <TableRowColumn className="departure">{c.from.departure}</TableRowColumn>

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 import moment from 'moment';
 import Popover, { PopoverAnimationVertical } from 'material-ui/Popover';
+import MdWarning from 'react-icons/md/warning';
+import MdMap from 'react-icons/md/map';
 
 import TransportForm from './TransportForm';
 import TransportConnection from './TransportConnection';
@@ -158,11 +160,11 @@ export default class Transport extends Component {
     let meteo = '';
     let meteoPrecision = '';
     const css = {
-      width: 'calc(100% - 40px',
+      width: 'calc(100% - 40px)',
       marginRight: '20px',
       marginLeft: '20px',
-      backgroundColor: '#f39c12',
-      padding: '10px',
+      border: '3px solid #f39c12',
+      backgroundColor: 'rgba(42, 42, 42, 0.9)',
 
     };
 
@@ -181,10 +183,10 @@ export default class Transport extends Component {
       );
     } else if (this.state.transport_api_error) {
       connection = (
-        <div className={style.colRight}>
-          <p className="error" id="transportConnectrion">
+        <div className={`${style.colRight} ${style.error}`}>
+          <h1>
             {this.state.transport_api_message}
-          </p>
+          </h1>
         </div>
       );
     }
@@ -201,9 +203,14 @@ export default class Transport extends Component {
               animation={PopoverAnimationVertical}
               style={css}
             >
-              <p>{this.state.meteo_api_precision}</p>
-              <p>{this.state.meteo_api_precision_alternative}</p>
-              <a target="_blank" rel="noopener noreferrer" href={this.state.meteo_api_precision_link}>Google Map</a>
+              <div className={style.warn}>
+                <MdWarning />
+                <div>
+                  <p>{this.state.meteo_api_precision}</p>
+                  <p>{this.state.meteo_api_precision_alternative}</p>
+                </div>
+                <a target="_blank" rel="noopener noreferrer" href={this.state.meteo_api_precision_link}><MdMap /></a>
+              </div>
             </Popover>
           );
         }
@@ -221,10 +228,10 @@ export default class Transport extends Component {
       }
     } else if (this.state.meteo_api_error) {
       meteo = (
-        <div className={style.col}>
-          <p className="error" id="transportMeteo">
+        <div className={`${style.col} ${style.error}`}>
+          <h1>
             {this.state.meteo_api_message}
-          </p>
+          </h1>
         </div>
       );
     }

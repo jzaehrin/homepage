@@ -1,5 +1,7 @@
 :local(.container) {
     padding: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
 }
 :local(.title) {
     font-family: Roboto;
@@ -8,16 +10,28 @@
     width: 100%;
     color: #343434;
     padding-bottom: 3px;
-    border-bottom: 1px solid rgb(0, 188, 212);
+    border-bottom: 2px solid rgb(0, 188, 212);
 }
 :local(.form) {
     color: #343434 !important;
     input {
+        margin-top: 5px !important;
         color: #343434 !important;
     }
     label {
         color: rgb(0, 188, 212) !important;
     }
+}
+:local(.autoComplete) {
+    margin-top: -10px;
+}
+:local(.datetimeError){
+    float: right;
+    font-size: 12px;
+    font-family: Roboto;
+    color: rgb(244, 67, 54);
+    display: block;
+    vertical-align: middle;
 }
 :local(.datatimePicker) {
     font-family: Roboto;

@@ -10,3 +10,30 @@
     background-color: #ecf0f1;
     // background-color: rgb(0, 188, 212);
 }
+:local(.error){
+    color: #fff;
+    vertical-align: middle;
+    svg {
+        display: block;
+        margin: 5px 20px 5px 5px;
+        color: #e74c3c;
+        width: 4%;
+        height: 4%;
+
+        float: left;
+    }
+    div {
+        float: left;
+        width: calc(~"75% - 20px");
+        margin: auto;
+        p{
+            color: #ecf0f1;
+            font-family: Roboto;
+        }
+    }
+    div + svg {
+        color: #ecf0f1;
+        float: right;
+        cursor: pointer;
+    }
+}
