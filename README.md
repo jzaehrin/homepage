@@ -1,12 +1,12 @@
 # HomePage
-This is my personnal HomePage. I actually improve that with new feature.
+This is my personal Homepage. I'm still working on several features and improvements.
 
 ## Usage
 
 ### Dist
 
-You can use the version currently build in the folder `dist`.
-Download files on `dist` and launch `index.html` on your browers.
+You can use the version currently built in the folder `dist`.
+Download files on `dist` and launch `index.html` on your browser.
 
 ### Building
 
@@ -17,54 +17,57 @@ You can rebuild the solution with npm :
     $ npm run prod
 ```
 
-The solution is build on the folder `dist`. Run `index.html` on your browers.
+The solution is built on the folder `dist`. Run `index.html` on your browser.
 
-#### Personnalisation (not userfriendy)
+#### Personalization (non-userfriendly)
 
-A feature give the weather information on your prefered location.
-It's necessary to config this on the file `src/components/App/App.js`, you find an attribute named `location`
-Fill it with a correct name from this [link](http://www.prevision-meteo.ch/services/json/list-cities "title" target="_blank").
+One of the feature gives weather informations on your prefered location.
+First you have to set up the configuration as follow :  
+- open the file `src/components/App/App.js`
+- find the attribute named `location`
+- Fill it with a correct name from this [link](http://www.prevision-meteo.ch/services/json/list-cities "title" target="_blank").
+
 
 ### Problem
 
-Actually, i use a type of `input` that supported by a small part of browers.
-Look [here](http://caniuse.com/#feat=input-datetime "title" target="_blank") what brower you can use for this App.
+The type of `input`used are only supported by a few browsers.
+Check [here](http://caniuse.com/#feat=input-datetime "title" target="_blank") which browser is compatible with this app.
 
-The application was build in ECMAScript 5, you can look the compatibility [here](http://caniuse.com/#feat=es5)
+The application is built in ECMAScript 5, you can check the compatibility informations [here](http://caniuse.com/#feat=es5)
 
-## Feature
+## Features
 
-### Meteo
+### Weather forecasting
 
-At start the application, I block appear with the current waether information set in the file `src/components/App/App.js`.
-At the future, this location can be insert by the user at the first start. Or by using location of the browers.
+When you start the application, a first block appears with the current weather informations set in the file `src/components/App/App.js`.
+
+In the future, this location will be inserted by the user at the first start. Or by using geolocation of the browser.
 
 ### Transport
 
-A form is display to search a travel in public transport. This API support in main swiss public transport.
-The autocompletion is provided by this same API.
+A form is displayed to search a route in public transport. This API supports main swiss public transports.
+The autocompletion is provided by the same API.
 
-#### Meteo
+#### Weather forecasting paired with transport
 
-When you search a travel, a block appear with weather information of the destination at the hour of arrival by the first proposition.
+The weather displayed in the fourth block (bottom right) is the weather from the first potential arrival (automatically calculated via the search travel block)
 
 ##### Geoname
+It may be possible that the city name you entered in the search travel block aren't supported by the Weather forecast API.
+When this occurs, i get GPS latitude and longitude from Geoname API and i send it at the weather API to get approximate results.
 
-This possible to find a name who didn't support by the API meteo. At this moment, I try to find the location with Geoname to get latitude and longitude. After this operation, i send this on API meteo to get approximate result
+#### Problems
 
-#### Problem
+I tried to implement an event listing at the entered destination - tested 2 event API without success.
 
-I try to implement event listing on the destination. But i test 2 API of event without success.
+The first one is [api.myswitzerland](http://api.myswitzerland.com/), no information was provided on how to get the apikey.
 
-The first is [api.myswitzerland](http://api.myswitzerland.com/), He didn't say how to get a apikey.
-
-The secomnd is [eventful](http://api.eventful.com/), my problem is the documentation without good information and the necessity to use the supply library for javascript. A direct request was send without CORS headers.
+The second one is [eventful](http://api.eventful.com/), they provide a js library but the direct request are sent without CORS headers.
 
 ## Structure
+The structure is based around React using babel to transpile es6 to es5 and webpack to bundle the whole project.
 
-The structure of the project is in React with babel for transpile the es6 to es5 and webpack for bundle the project.
-
-On this graph, you can look all components and different interaction between them.
+On this graph, you can look all the components and different interactions between them.
 ![struct](./assets/struct.png)
 
 ## Links
