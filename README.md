@@ -10,14 +10,14 @@ Download files on `dist` and launch `index.html` on your browser.
 Or clone this project :
 
 ```bash
-    $ git clone (link of project)
+    $ git clone https://github.com/jzaehrin/homepage.git
 ```
 
 ### Building
 
 You can rebuild the solution with npm :
 ```bash
-    $ git clone (link of project)
+    $ git clone https://github.com/jzaehrin/homepage.git
     $ npm install
     $ npm run prod
 ```
