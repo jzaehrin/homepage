@@ -58,5 +58,5 @@ The secomnd is [eventful](http://api.eventful.com/), my problem is the documenta
 
 1. Transport API
   * [Official website](https://transport.opendata.ch/)
-2. Meteo API
+2. Prevision meteo API
   * [Official website](http://www.prevision-meteo.ch/services)
