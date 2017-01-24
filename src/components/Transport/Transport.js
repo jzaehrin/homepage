@@ -7,7 +7,7 @@ import MdMap from 'react-icons/md/map';
 
 import TransportForm from './TransportForm';
 import TransportConnection from './TransportConnection';
-import TransportEvent from './TransportEvent';
+// import TransportEvent from './TransportEvent';
 import Meteo from '../Meteo';
 import listCities from './list-cities.json';
 import style from './Transport.less';
@@ -17,6 +17,8 @@ export default class Transport extends Component {
     super();
 
     this.handlerUpdate = this.handlerUpdate.bind(this);
+    this.getMeteoPrevision = this.getMeteoPrevision.bind(this);
+    this.getTransportConnection = this.getTransportConnection.bind(this);
     this.handleRequestClosing = this.handleRequestClosing.bind(this);
   }
   state = {
@@ -26,6 +28,7 @@ export default class Transport extends Component {
     datetime: '',
     transport_api: null,
     meteo_api: null,
+    meteo_api_error: false,
     event_api: null,
     pop: true,
   };
@@ -35,6 +38,7 @@ export default class Transport extends Component {
       data.via = '';
     }
 
+    /* Send request to Transport API */
     $.get('http://transport.opendata.ch/v1/connections',
       {
         to: data.to,
@@ -46,14 +50,16 @@ export default class Transport extends Component {
         page: 0, // Default page used for next/prev button
       }).then((d) => {
         console.debug('Data from Transport API', d);
-        d.connections.map((c) => {
-          c.duration = moment(c.duration, 'd-HH-mm-ss').format('HH:mm');
-          c.from.departure = moment(c.from.departure).format('D-MM-YYYY HH:mm');
-          c.products_count = c.products.length;
-
-          return true;
-        });
+        /* Test if result is not empty */
         if (d.connections.length > 0) {
+          d.connections.map((c) => {
+            c.duration = moment(c.duration, 'd-HH-mm-ss').format('HH:mm');
+            c.from.departure = moment(c.from.departure).format('D-MM-YYYY HH:mm');
+            c.products_count = c.products.length;
+
+            return true;
+          });
+
           this.setState({ meteo_api_hour: `${moment(d.connections[0].to.arrival).format('H')}H00` });
 
           this.setState({ transport_api: d, transport_api_error: false });
@@ -61,6 +67,7 @@ export default class Transport extends Component {
           this.setState({ transport_api_message: '0 Connexion trouvé !', transport_api_error: true });
         }
       }).catch((e) => {
+        /* Catch error from transport API */
         console.error(e.responseJSON.errors[0].message);
         this.setState({ transport_api_message: `Transport-api Error: ${e.status} - ${e.statusText}`, transport_api_error: true });
       });
@@ -69,10 +76,14 @@ export default class Transport extends Component {
   getMeteoPrevision(data) {
     const selectedDay = moment(data.datetime).diff(moment(), 'days');
 
+    /* Test if the date is too in the futur or in the past */
     if (selectedDay >= 0 && selectedDay <= 5) {
+      /* Send request with the input value */
       $.get(`http://www.prevision-meteo.ch/services/json/${data.to.split(',')[0]}`)
         .then((d) => {
+          /* Test if the destination is found */
           if (d.errors) {
+            /* Error get Alternative */
             console.debug('City not found, research by lat & lng');
             const alternative = [];
             const re = new RegExp(`^${data.to.split(',')[0].toLowerCase()}`);
@@ -82,20 +93,27 @@ export default class Transport extends Component {
               }
             });
 
+            /* Try to get lat & lng from Geoname */
             $.get('http://api.geonames.org/postalCodeSearch', { placename: data.to.split(',')[0], username: 'jzaehrin', type: 'json' })
               .then((coordonate) => {
-                console.debug('Geoname datae', coordonate);
-                if (coordonate.lenght < 1) {
+                console.debug('Geoname data', coordonate);
+                /* If no result print alternative and error */
+                if (coordonate.postalCodes.length < 1) {
+                  let message = `Meteo-api Error: ${d.errors[0].text}.`;
+                  if (alternative.length > 0) {
+                    message = `${message} Alternative: ${alternative.join(', ')}`;
+                  }
+
                   this.setState({
-                    message: 'No postal code find for the destination - API Meteo & Event cannot be render',
-                    type: 'error',
-                    meteo_api_message: `Meteo-api Error: ${coordonate.errors[0].text}. Alternative: ${alternative.join(', ')}`,
+                    meteo_api_message: message,
                     meteo_api_error: true,
                   });
                 } else {
+                  /* Resend request to meteo API with lat & lng */
                   const city = coordonate.postalCodes[0];
                   $.get(`http://www.prevision-meteo.ch/services/json/lat=${city.lat}lng=${city.lng}`)
                     .then((r) => {
+                      /* Add warning for precision */
                       r.city_info.name = data.to.split(',')[0];
                       console.debug('Data from Meteo API', d);
                       this.setState({
@@ -111,11 +129,9 @@ export default class Transport extends Component {
                       });
                     });
                 }
-              })
-              .catch((e) => {
-                console.debug('Geoname Error', e);
               });
           } else {
+            /* If no error */
             console.debug('Data from Meteo API', d);
             this.setState({
               meteo_api: d,
@@ -150,7 +166,15 @@ export default class Transport extends Component {
 
     this.getMeteoPrevision(data);
 
-      /*  $.get('http://api.eventful.com/events', { app_key: apiKey, oauth_token: '09e9c011dd5a1ec871e7', oauth_token_secret: 'be16e3ef5357870b4002', location: 'Sion', type: 'json' })
+      /* Example for get event from eventful API.
+       * But not work in direct request, no CORD heard getted
+          $.get('http://api.eventful.com/events',
+            { app_key: '',
+              oauth_token: '09e9c011dd5a1ec871e7',
+              oauth_token_secret: 'be16e3ef5357870b4002',
+              location: 'Sion',
+              type: 'json'
+            })
             .then((r) => {
               console.debug('Eventful', r);
             })
@@ -178,6 +202,7 @@ export default class Transport extends Component {
       status = <div id="status" className={classString}>{this.state.message}</div>;
     }
 
+    /* Render TransportConnection component */
     if (!this.state.transport_api_error && this.state.transport_api) {
       connection = (
         <div className={style.colRight}>
@@ -186,7 +211,7 @@ export default class Transport extends Component {
           />
         </div>
       );
-    } else if (this.state.transport_api_error) {
+    } else if (this.state.transport_api_error) { /* render error */
       connection = (
         <div className={`${style.colRight} ${style.error}`}>
           <h1>
@@ -196,8 +221,10 @@ export default class Transport extends Component {
       );
     }
 
+    /* Render Meteo component */
     if (!this.state.meteo_api_error && this.state.meteo_api) {
       if (this.state.meteo_api_hour) {
+        /* Add precision */
         if (this.state.meteo_api_precision) {
           meteoPrecision = (
             <Popover
@@ -219,6 +246,7 @@ export default class Transport extends Component {
             </Popover>
           );
         }
+
         meteo = (
           <div className={style.col} >
             {meteoPrecision}
@@ -231,7 +259,7 @@ export default class Transport extends Component {
           </div>
         );
       }
-    } else if (this.state.meteo_api_error) {
+    } else if (this.state.meteo_api_error) { /* Render error */
       meteo = (
         <div className={`${style.col} ${style.error}`}>
           <h1>
@@ -241,10 +269,12 @@ export default class Transport extends Component {
       );
     }
 
+    /* Render Event
     if (false) {
       const event = (<TransportEvent />);
       console.debug(event);
     }
+    */
 
     return (
       <div>

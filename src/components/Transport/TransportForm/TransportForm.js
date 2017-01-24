@@ -32,16 +32,10 @@ export default class TransportForm extends Component {
     dataSource: [],
   };
 
-  componentDidMount() {
-    $([this.from, this.to, this.via]).autocomplete({
-      source: this.getLocationList,
-      select: this.onSelectLocation,
-    });
-  }
-
   onSubmit(e) {
     e.preventDefault();
 
+    /* Test case if require field is filled */
     let error = false;
     const isMissing = {
       from: false,
@@ -71,11 +65,13 @@ export default class TransportForm extends Component {
 
     this.setState(data);
 
+    /* Send to Transport component */
     if (!error) {
       this.props.onSubmit(data);
     }
   }
 
+  /* AutoComplete function, return the list of result from transport API */
   handleUpdateInput(value) {
     $.get('http://transport.opendata.ch/v1/locations',
       { query: value, type: 'station' }, (data) => {
@@ -95,6 +91,7 @@ export default class TransportForm extends Component {
     let fromIsRequired = '';
     let datetimeIsRequired = '';
 
+    /* create error element */
     if (this.state.isMissing.from) {
       fromIsRequired = (<p>This field is required</p>);
     }
@@ -116,6 +113,7 @@ export default class TransportForm extends Component {
               floatingLabelText="From"
               dataSource={this.state.dataSource}
               onUpdateInput={
+                /* Delay for sending request for don't make spam */
                 _.debounce((value) => { this.handleUpdateInput(value); }, 100)
               }
               ref={(from) => { this.from = from; }}
@@ -128,6 +126,7 @@ export default class TransportForm extends Component {
               floatingLabelText="To"
               dataSource={this.state.dataSource}
               onUpdateInput={
+                /* Delay for sending request for don't make spam */
                 _.debounce((value) => { this.handleUpdateInput(value); }, 100)
               }
               ref={(to) => { this.to = to; }}
@@ -140,6 +139,7 @@ export default class TransportForm extends Component {
               floatingLabelText="Via"
               dataSource={this.state.dataSource}
               onUpdateInput={
+                /* Delay for sending request for don't make spam */
                 _.debounce((value) => { this.handleUpdateInput(value); }, 100)
               }
               ref={(via) => { this.via = via; }}

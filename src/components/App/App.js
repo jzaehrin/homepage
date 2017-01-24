@@ -24,6 +24,7 @@ export default class App extends Component {
   };
 
   componentWillMount() {
+    /* Get weather information for location */
     $.get(`http://www.prevision-meteo.ch/services/json/${this.location}`)
       .then((d) => {
         if (d.errors) {
@@ -69,6 +70,7 @@ export default class App extends Component {
 
     };
 
+    /* Alert user when the access to internet is unavailible */
     if (!window.navigator.onLine) {
       offlineAlert = (
         <Popover
@@ -89,6 +91,8 @@ export default class App extends Component {
         </Popover>
       );
     }
+
+    /* render Meteo component */
     if (!this.state.meteo_api_error && this.state.meteo_api) {
       if (this.state.meteo_api_hour) {
         meteo = (
@@ -99,12 +103,10 @@ export default class App extends Component {
           />
         );
       }
-    } else {
+    } else { /* render Error from Weather API */
       meteo = (
-        <div className="block">
-          <p className="error" id="transportMeteo">
-            {this.state.meteo_api_message}
-          </p>
+        <div className={style.meteo_error}>
+          <p>{this.state.meteo_api_message}</p>
         </div>
       );
     }
@@ -122,6 +124,7 @@ export default class App extends Component {
           <div className={`${style.col} ${style.background}`}>
             {meteo}
           </div>
+          {/*  Render Tranport component */}
           <Transport />
         </div>
       </MuiThemeProvider>

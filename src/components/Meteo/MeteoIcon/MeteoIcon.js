@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-
+/* Load SVGAnimate for render animation */
 import animateSun, { animateMoon, animateCloud, animateLittleCloud } from './SVGAnimate/SVGAnimate';
 
 import style from './MeteoIcon.less';
@@ -28,6 +28,7 @@ export default class MeteoIcon extends Component {
   }
 
   configSVG() {
+    /* render SVG and add animation with svgConfig */
     this.snowing.style.opacity = 0;
     if (this.props.svgConfig.snowEnable) {
       this.snowing.style.opacity = 1;

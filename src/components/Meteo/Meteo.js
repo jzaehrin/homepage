@@ -32,6 +32,7 @@ export default class Meteo extends Component {
   };
 
   render() {
+    /* Test case for config and create weather information */
     const result = this.props.data;
     console.debug('Meteo props', this.props);
     const dayField = `fcst_day_${this.props.selectedDay}`;
@@ -63,7 +64,7 @@ export default class Meteo extends Component {
     }
 
     const windText = (
-      <p>Vent de {hourlyResult.WNDSPD10m} Km/H</p>
+      <p>Wind speed: {hourlyResult.WNDSPD10m} Km/h</p>
     );
     let windEnable = false;
     if (hourlyResult.WNDSPD10m > 20) {
@@ -95,6 +96,7 @@ export default class Meteo extends Component {
       night = true;
     }
 
+    /* group information for MeteoIcon */
     this.svgConfig = {
       stormEnable,
       windEnable,
@@ -133,6 +135,7 @@ export default class Meteo extends Component {
           </Table>
         </div>
         <div className={style.icon_container}>
+          {/* Render MeteoIcon */}
           <MeteoIcon svgConfig={this.svgConfig} />
         </div>
       </div>
