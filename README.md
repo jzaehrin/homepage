@@ -53,3 +53,10 @@ I try to implement event listing on the destination. But i test 2 API of event w
 The first is [api.myswitzerland](http://api.myswitzerland.com/), He didn't say how to get a apikey.
 
 The secomnd is [eventful](http://api.eventful.com/), my problem is the documentation without good information and the necessity to use the supply library for javascript. A direct request was send without CORS headers.
+
+## Links
+
+1. Transport API
+  * [Official website](https://transport.opendata.ch/)
+2. Meteo API
+  * [Official website](http://www.prevision-meteo.ch/services)
