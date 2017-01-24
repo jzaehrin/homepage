@@ -7,6 +7,11 @@ This is my personal Homepage. I'm still working on several features and improvem
 
 You can use the version currently built in the folder `dist`.
 Download files on `dist` and launch `index.html` on your browser.
+Or clone this project :
+
+```bash
+    $ git clone (link of project)
+```
 
 ### Building
 
