@@ -48,6 +48,10 @@ The autocompletion is provided by this same API.
 
 When you search a travel, a block appear with weather information of the destination at the hour of arrival by the first proposition.
 
+##### Geoname
+
+This possible to find a name who didn't support by the API meteo. At this moment, I try to find the location with Geoname to get latitude and longitude. After this operation, i send this on API meteo to get approximate result
+
 #### Problem
 
 I try to implement event listing on the destination. But i test 2 API of event without success.
@@ -55,6 +59,13 @@ I try to implement event listing on the destination. But i test 2 API of event w
 The first is [api.myswitzerland](http://api.myswitzerland.com/), He didn't say how to get a apikey.
 
 The secomnd is [eventful](http://api.eventful.com/), my problem is the documentation without good information and the necessity to use the supply library for javascript. A direct request was send without CORS headers.
+
+## Structure
+
+The structure of the project is in React with babel for transpile the es6 to es5 and webpack for bundle the project.
+
+On this graph, you can look all components and different interaction between them.
+![struct](./assets/struct.png)
 
 ## Links
 
