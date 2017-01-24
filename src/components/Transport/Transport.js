@@ -31,10 +31,15 @@ export default class Transport extends Component {
   };
 
   getTransportConnection(data) {
+    if (!data.via) {
+      data.via = '';
+    }
+
     $.get('http://transport.opendata.ch/v1/connections',
       {
         to: data.to,
         from: data.from,
+        via: data.via,
         date: moment(data.datetime).format('YYYY-MM-D'),
         time: moment(data.datetime).format('HH:mm'),
         limit: 4, // limit number of result (1-6)

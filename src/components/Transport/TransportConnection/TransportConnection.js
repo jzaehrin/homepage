@@ -22,9 +22,9 @@ export default class TransportConnection extends Component {
   };
 
   render() {
-    const result = this.props.data.connections;
+    const result = this.props.data;
     result.lenght = 4;
-    const connectionsArray = result.map(c => (
+    const connectionsArray = result.connections.map(c => (
       <TableRow>
         <TableRowColumn className="departure">{c.from.departure}</TableRowColumn>
         <TableRowColumn className="lane">{c.from.platform}</TableRowColumn>
@@ -33,9 +33,16 @@ export default class TransportConnection extends Component {
         <TableRowColumn className="typeChanges">{c.products.join(', ')}</TableRowColumn>
       </TableRow>
     ));
+    let via = '';
+    if (result.stations.via1) {
+      via = (<h3 className={style.undertitle}>Via {result.stations.via1[0].name}</h3>);
+    }
     return (
       <div className={style.container}>
-        <h2 className={style.title}>Travel Connection</h2>
+        <h2 className={style.title}>
+          Travel Connection for {result.from.name} to {result.to.name}
+        </h2>
+        {via}
         <Table className={style.table}>
           <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
             <TableRow>

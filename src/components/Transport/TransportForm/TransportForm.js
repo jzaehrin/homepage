@@ -149,7 +149,7 @@ export default class TransportForm extends Component {
 
           <div className={style.datatimePicker}>
             <label htmlFor="datetime">Time:</label>
-            <input type="datetime-local" ref={(datetime) => { this.datetime = datetime; }} defaultValue={this.state.datetime} />
+            <input type="datetime" ref={(datetime) => { this.datetime = datetime; }} defaultValue={this.state.datetime} />
             {datetimeIsRequired}
           </div>
           <RaisedButton
