@@ -81,3 +81,13 @@ On this graph, you can look all the components and different interactions betwee
   * [Official website](https://transport.opendata.ch/)
 2. Prevision meteo API
   * [Official website](http://www.prevision-meteo.ch/services)
+3. Material-ui - React component based on Material Design
+  * [Official website](http://www.material-ui.com/)
+4. ReactJS
+  * [Officail website](https://facebook.github.io/react/)
+5. Babel
+  * [Official website](https://babeljs.io/)
+  * [npmjs page](https://www.npmjs.com/package/babel-loader)
+6. Webpack
+  * [Official website](https://webpack.github.io/docs/)
+  * [npmjs page](https://www.npmjs.com/package/webpack)
