@@ -30,6 +30,8 @@ Fill it with a correct name from this [link](http://www.prevision-meteo.ch/servi
 Actually, i use a type of `input` that supported by a small part of browers.
 Look [here](http://caniuse.com/#feat=input-datetime "title" target="_blank") what brower you can use for this App.
 
+The application was build in ECMAScript 5, you can look the compatibility [here](http://caniuse.com/#feat=es5)
+
 ## Feature
 
 ### Meteo
