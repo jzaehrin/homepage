@@ -3,6 +3,7 @@ import $ from 'jquery';
 import moment from 'moment';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Popover, { PopoverAnimationVertical } from 'material-ui/Popover';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import AppBar from 'material-ui/AppBar';
 import MdError from 'react-icons/md/error';
 import MdRefresh from 'react-icons/md/refresh';
@@ -121,9 +122,19 @@ export default class App extends Component {
             titleStyle={{ color: '3434344' }}
           />
           {offlineAlert}
-          <div className={`${style.col} ${style.background}`}>
-            {meteo}
-          </div>
+
+          <ReactCSSTransitionGroup
+            transitionName="block"
+            transitionAppear
+            transitionAppearTimeout={2000}
+            transitionLeave
+            transitionLeaveTimeout={2000}
+            transitionEnter={false}
+          >
+            <div className={`${style.col} ${style.background}`}>
+              {meteo}
+            </div>
+          </ReactCSSTransitionGroup>
           {/*  Render Tranport component */}
           <Transport />
         </div>

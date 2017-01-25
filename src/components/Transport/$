@@ -77,15 +77,17 @@
         -webkit-perspective: 500px;
     }
 
-    .block-appear.block-appear-active {
+    .block-appear.block-appear-active,
+    .block-m-appear.block-m-appear-active,
+    .block-c-appear.block-c-appear-active{
         transform-style: preserve-3d;
         -webkit-transform-style: preserve-3d;
         transform-origin: 0% 0%;
         -webkit-transform-origin: 0% 0%;
-        transform: rotateX(-80deg);
-        -webkit-transform: rotateX(-80deg);
+        transform: rotateX(-90deg);
+        -webkit-transform: rotateX(-90deg);
         animation: flip .8s ease-in-out forwards;
-        -webkit-animation: flip .8s ease-in-out forwards;
+        -webkit-animation: flip 2s ease-in-out forwards;
     }
 
     @-webkit-keyframes flip {

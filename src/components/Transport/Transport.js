@@ -4,6 +4,7 @@ import moment from 'moment';
 import Popover, { PopoverAnimationVertical } from 'material-ui/Popover';
 import MdWarning from 'react-icons/md/warning';
 import MdMap from 'react-icons/md/map';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import TransportForm from './TransportForm';
 import TransportConnection from './TransportConnection';
@@ -184,7 +185,6 @@ export default class Transport extends Component {
   }
 
   render() {
-    let status = '';
     let connection = '';
     let meteo = '';
     let meteoPrecision = '';
@@ -196,11 +196,6 @@ export default class Transport extends Component {
       backgroundColor: 'rgba(42, 42, 42, 0.9)',
 
     };
-
-    if (this.state.type && this.state.message) {
-      const classString = `alert alert- ${this.state.type}`;
-      status = <div id="status" className={classString}>{this.state.message}</div>;
-    }
 
     /* Render TransportConnection component */
     if (!this.state.transport_api_error && this.state.transport_api) {
@@ -269,19 +264,56 @@ export default class Transport extends Component {
       );
     }
 
-    /* Render Event
+      /* Render Event
     if (false) {
       const event = (<TransportEvent />);
       console.debug(event);
     }
     */
+    if (meteo !== '') {
+      meteo = (
+        <ReactCSSTransitionGroup
+          transitionName="block"
+          transitionAppear
+          transitionAppearTimeout={2000}
+          transitionLeave
+          transitionLeaveTimeout={2000}
+          transitionEnter={false}
+        >
+          {meteo}
+        </ReactCSSTransitionGroup>
+      );
+    }
+
+    if (connection !== '') {
+      connection = (
+        <ReactCSSTransitionGroup
+          transitionName="block"
+          transitionAppear
+          transitionAppearTimeout={2000}
+          transitionLeave
+          transitionLeaveTimeout={2000}
+          transitionEnter={false}
+        >
+          {connection}
+        </ReactCSSTransitionGroup>
+      );
+    }
 
     return (
       <div>
-        <div className={`${style.form} ${style.col}`}>
-          <TransportForm onSubmit={this.handlerUpdate} />
-          {status}
-        </div>
+        <ReactCSSTransitionGroup
+          transitionName="block"
+          transitionAppear
+          transitionAppearTimeout={2000}
+          transitionLeave
+          transitionLeaveTimeout={2000}
+          transitionEnter={false}
+        >
+          <div className={`${style.form} ${style.col}`}>
+            <TransportForm onSubmit={this.handlerUpdate} />
+          </div>
+        </ReactCSSTransitionGroup>
         {connection}
         {meteo}
       </div>
