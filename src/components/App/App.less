@@ -46,3 +46,35 @@
         cursor: pointer;
     }
 }
+
+:global {
+    /* Init */
+    .block-appear {
+        opacity: 0;
+        perspective: 500px;
+        -webkit-perspective: 500px;
+    }
+
+    /* rotate at -80deg for back flip the component */
+    .block-appear.block-appear-active {
+        transform-style: preserve-3d;
+        -webkit-transform-style: preserve-3d;
+        transform-origin: 0% 0%;
+        -webkit-transform-origin: 0% 0%;
+        transform: rotateX(-80deg);
+        -webkit-transform: rotateX(-80deg);
+        /* exec rotate at 0deg during 0.8s for display the component */
+        animation: flip .8s ease-in-out forwards;
+        -webkit-animation: flip .8s ease-in-out forwards;
+    }
+
+    /* Flip function */
+    @-webkit-keyframes flip {
+        0% { }
+        100% { -webkit-transform: rotateX(0deg); opacity: 1; }
+    }
+    @keyframes flip {
+        0% { }
+        100% { -webkit-transform: rotateX(0deg); opacity: 1; }
+    }
+}

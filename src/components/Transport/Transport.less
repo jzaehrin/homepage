@@ -25,6 +25,9 @@
     box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px,
     rgba(0, 0, 0, 0.117647) 0px 1px 4px;
 }
+:local(.empty) {
+    height: 0px !important;
+}
 :local(.error) {
     padding: 20px;
     width: calc(~"50% - 50px") !important;
@@ -68,32 +71,5 @@
             width: 100%;
             height: 100%;
         }
-    }
-}
-:global {
-    .block-appear, .block-c-appear, .block-m-appear {
-        opacity: 0;
-        perspective: 500px;
-        -webkit-perspective: 500px;
-    }
-
-    .block-appear.block-appear-active {
-        transform-style: preserve-3d;
-        -webkit-transform-style: preserve-3d;
-        transform-origin: 0% 0%;
-        -webkit-transform-origin: 0% 0%;
-        transform: rotateX(-80deg);
-        -webkit-transform: rotateX(-80deg);
-        animation: flip .8s ease-in-out forwards;
-        -webkit-animation: flip .8s ease-in-out forwards;
-    }
-
-    @-webkit-keyframes flip {
-        0% { }
-        100% { -webkit-transform: rotateX(0deg); opacity: 1; }
-    }
-    @keyframes flip {
-        0% { }
-        100% { -webkit-transform: rotateX(0deg); opacity: 1; }
     }
 }

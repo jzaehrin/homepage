@@ -270,20 +270,6 @@ export default class Transport extends Component {
       console.debug(event);
     }
     */
-    if (meteo !== '') {
-      meteo = (
-        <ReactCSSTransitionGroup
-          transitionName="block"
-          transitionAppear
-          transitionAppearTimeout={2000}
-          transitionLeave
-          transitionLeaveTimeout={2000}
-          transitionEnter={false}
-        >
-          {meteo}
-        </ReactCSSTransitionGroup>
-      );
-    }
 
     if (connection !== '') {
       connection = (
@@ -298,6 +284,28 @@ export default class Transport extends Component {
           {connection}
         </ReactCSSTransitionGroup>
       );
+    }
+
+    if (meteo !== '') {
+      meteo = (
+        <ReactCSSTransitionGroup
+          transitionName="block"
+          transitionAppear
+          transitionAppearTimeout={2000}
+          transitionLeave
+          transitionLeaveTimeout={2000}
+          transitionEnter={false}
+        >
+          {meteo}
+        </ReactCSSTransitionGroup>
+      );
+
+      /* If meteo is too fast */
+      if (connection === '') {
+        connection = (
+          <div className={`${style.colRight} ${style.empty}`} />
+        );
+      }
     }
 
     return (

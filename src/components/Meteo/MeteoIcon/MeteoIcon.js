@@ -29,31 +29,36 @@ export default class MeteoIcon extends Component {
 
   configSVG() {
     /* render SVG and add animation with svgConfig */
+    const svgConfig = this.props.svgConfig;
+
+    /* For each element, test if necessary to display it */
     this.snowing.style.opacity = 0;
-    if (this.props.svgConfig.snowEnable) {
+    if (svgConfig.snowEnable) {
       this.snowing.style.opacity = 1;
     }
 
     this.raining.style.opacity = 0;
-    if (this.props.svgConfig.rainEnable) {
+    if (svgConfig.rainEnable) {
       this.raining.style.opacity = 1;
     }
 
     this.wind.style.opacity = 0;
-    if (this.props.svgConfig.windEnable) {
+    if (svgConfig.windEnable) {
       this.wind.style.opacity = 1;
     }
 
     this.lighting.style.opacity = 0;
-    if (this.props.svgConfig.stormEnable) {
+    if (svgConfig.stormEnable) {
       this.lighting.style.opacity = 1;
     }
 
     this.raisingSun.style.opacity = 0;
     this.raisingMoon.style.opacity = 0;
-    if (this.props.svgConfig.sunEnable) {
-      if (this.props.svgConfig.night) {
+    if (svgConfig.sunEnable) {
+      /* Test if it's night */
+      if (svgConfig.night) {
         this.raisingMoon.style.opacity = 1;
+        /* apply animation */
         animateMoon(this.raisingMoon);
       } else {
         this.raisingSun.style.opacity = 1;
@@ -63,8 +68,9 @@ export default class MeteoIcon extends Component {
 
     this.sun.style.opacity = 0;
     this.moon.style.opacity = 0;
-    if (this.props.svgConfig.sunnyEnable) {
-      if (this.props.svgConfig.night) {
+    if (svgConfig.sunnyEnable) {
+      /* Test if it's night */
+      if (svgConfig.night) {
         this.moon.style.opacity = 1;
         animateMoon(this.moon);
       } else {
@@ -75,10 +81,10 @@ export default class MeteoIcon extends Component {
 
     this.blueCloud.style.opacity = 0;
     this.darkblueCloud.style.opacity = 0;
-    if (this.props.svgConfig.cloudEnable) {
+    if (svgConfig.cloudEnable) {
       this.blueCloud.style.opacity = 1;
       animateCloud(this.blueCloud);
-      if (!this.props.svgConfig.sunnyEnable) {
+      if (!svgConfig.sunnyEnable) {
         this.darkblueCloud.style.opacity = 1;
         animateLittleCloud(this.darkblueCloud);
       }
